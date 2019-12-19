@@ -1,0 +1,82 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class moveBehavior : MonoBehaviour {
+
+	Rigidbody myRB;
+	public float multiplier = 10f;
+	int cubesEaten = 0;
+	public int eatThresh = 3;
+
+
+
+	// Use this for initialization
+	void Start () {
+		
+		myRB = GetComponent<Rigidbody> ();
+	
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		//move forward
+		if (Input.GetKey (KeyCode.W)) {
+
+			myRB.AddForce (new Vector3 (0f, 0f, 1f) * multiplier);
+			}
+	//move backwards
+		if(Input.GetKey (KeyCode.S)){
+
+			myRB.AddForce (new Vector3 (0f, 0f, -1f) * multiplier);
+		}
+	//move left
+
+		if(Input.GetKey(KeyCode.A)){
+
+			myRB.AddForce (new Vector3 (-1f,0f,0f) * multiplier);
+		}
+	//move right
+
+		if (Input.GetKey (KeyCode.D)) {
+			
+			myRB.AddForce (new Vector3 (1f,0f,0f) * multiplier);
+
+
+		}
+
+
+
+	}
+
+	void OnCollisionEnter (Collision col){
+
+		if(col.gameObject.CompareTag("prey")){
+
+			cubesEaten++;
+
+
+			Destroy (col.gameObject);
+		}
+
+
+		if (col.gameObject.CompareTag ("predator")) {
+
+			if(cubesEaten < eatThresh){
+
+				Destroy (col.gameObject);
+			}
+	
+	
+	
+		}
+	
+
+	
+	
+	}
+
+
+
+}
